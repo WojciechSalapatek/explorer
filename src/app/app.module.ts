@@ -1,8 +1,13 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { SummaryTableComponent } from './summary-table/summary-table.component';
+import {AppComponent} from './app.component';
+import {SummaryTableComponent} from './summary-table/summary-table.component';
+import {HttpClientModule} from "@angular/common/http";
+import {TokenDefinitionService} from "./token/token-definition";
+import {TokenBalanceService} from "./token/token-balance";
+import {PancakeswapApiService} from "./service/pancakeswap-api-service";
+import {TokenApiService} from "./service/token-api-service";
 
 @NgModule({
   declarations: [
@@ -10,9 +15,16 @@ import { SummaryTableComponent } from './summary-table/summary-table.component';
     SummaryTableComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    TokenDefinitionService,
+    TokenBalanceService,
+    PancakeswapApiService,
+    TokenApiService
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
