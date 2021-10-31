@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BalanceSummary, TokenBalanceService} from "../token/token-balance";
 import {TokenApiService, TokenHoldingData} from "../service/token-api-service";
-import {Token} from "../token/token-definition";
-import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
+import {Token, TokenDefinitionService} from "../token/token-definition";
+import {forkJoin, Observable, of, Subscription} from "rxjs";
+import {delay, map} from "rxjs/operators";
 import {SmartContractService} from "../service/smartcontract/smart-contract-service";
 
 @Component({
@@ -11,28 +11,56 @@ import {SmartContractService} from "../service/smartcontract/smart-contract-serv
   templateUrl: './summary-table.component.html',
   styleUrls: ['./summary-table.component.css']
 })
-export class SummaryTableComponent implements OnInit {
+export class SummaryTableComponent implements OnInit, OnDestroy {
 
   TOKENS = Token
 
   data: Array<Observable<TokenSummary>> = [];
+  smartData: Array<TokenSummary> = [];
+  smartDataObservables: Array<Observable<TokenSummary>> = [];
+  subscriptions: Array<Subscription> = [];
+
 
   constructor(private tokenBalanceService: TokenBalanceService,
               private tokenApiService: TokenApiService,
-              private smartContractService: SmartContractService) {
+              private smartContractService: SmartContractService,
+              private tokenDefinitionService: TokenDefinitionService) {
   }
 
   ngOnInit(): void {
-    this.smartContractService.connect()
     this.data = Object.keys(this.TOKENS)
       .map(k => this.TOKENS[k as Token])
       .map(t => this.constructSummary(t))
+    this.smartDataObservables = Object.keys(this.TOKENS)
+      .map(k => this.TOKENS[k as Token])
+      .map(t => this.constructSmartSummary(t))
+    this.smartDataObservables.forEach((o, i) => {
+      setTimeout(() => {
+        const sub = o.subscribe(summary => this.smartData.push(summary))
+        this.subscriptions.push(sub)
+      }, i*1200)
+    })
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach(s => s.unsubscribe())
   }
 
   constructSummary(token: Token): Observable<TokenSummary> {
     const balance = this.tokenBalanceService.getBalance(token)
     return this.tokenApiService.getTokenHoldingData(token)
       .pipe(map(data => this.summaryOf(token, balance, data)))
+  }
+
+  constructSmartSummary(token: Token): Observable<TokenSummary> {
+    const balance = this.tokenBalanceService.getBalance(token)
+    const tokenDef = this.tokenDefinitionService.getTokenDefinition(token)
+    return this.smartContractService.tokenToUSD(tokenDef)
+      .pipe(map(price => this.summaryOf(token, balance, {
+        price: price,
+        symbol: tokenDef.symbol,
+        name: tokenDef.name
+      })))
   }
 
   summaryOf(token: Token, balanceSummary: BalanceSummary, data: TokenHoldingData): TokenSummary {
