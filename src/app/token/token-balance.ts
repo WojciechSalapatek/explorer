@@ -4,7 +4,7 @@ import {Token} from "./token-definition";
 @Injectable()
 export class TokenBalanceService {
   private readonly balances: Map<Token, BalanceSummary> = new Map<Token, BalanceSummary>([
-    [Token.SQUID, balanceSummaryOf(188.52, 21.082)],
+    [Token.SQUID, balanceSummaryOf(10.84, 21.082)],
     [Token.GHC, balanceSummaryOf(5.25, 100526545.096)],
     [Token.TABOO, balanceSummaryOf(10.84, 930.484)],
     [Token.COCK, balanceSummaryOf(5.25, 455810527.889)],
