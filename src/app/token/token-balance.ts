@@ -8,8 +8,8 @@ export class TokenBalanceService {
     [Token.GHC, balanceSummaryOf(5.25, 100526545.096)],
     [Token.TABOO, balanceSummaryOf(10.84, 930.484)],
     [Token.COCK, balanceSummaryOf(5.25, 455810527.889)],
-    [Token.SHIBAZILLA, balanceSummaryOf(5.25, 15818950039070965.033)],
-    [Token.BABYDOGEZILLA, balanceSummaryOf(5.25, 134093203035316501.109)],
+    // [Token.SHIBAZILLA, balanceSummaryOf(5.25, 15818950039070965.033)],
+    // [Token.BABYDOGEZILLA, balanceSummaryOf(5.25, 134093203035316501.109)],
     [Token.SQUIDGAMES, balanceSummaryOf(5.25, 5144.824)],
   ])
 

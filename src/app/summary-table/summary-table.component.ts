@@ -2,8 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {BalanceSummary, TokenBalanceService} from "../token/token-balance";
 import {TokenApiService, TokenHoldingData} from "../service/token-api-service";
 import {Token, TokenDefinitionService} from "../token/token-definition";
-import {forkJoin, Observable, of, Subscription} from "rxjs";
-import {delay, map} from "rxjs/operators";
+import {combineLatest, Observable, of, Subscription} from "rxjs";
+import {map} from "rxjs/operators";
 import {SmartContractService} from "../service/smartcontract/smart-contract-service";
 
 @Component({
@@ -19,6 +19,9 @@ export class SummaryTableComponent implements OnInit, OnDestroy {
   smartData: Array<TokenSummary> = [];
   smartDataObservables: Array<Observable<TokenSummary>> = [];
   subscriptions: Array<Subscription> = [];
+  totalSpending: Observable<number> = of(0);
+  totalValue: Observable<number> = of(0);
+  total: Observable<number> = of(0);
 
 
   constructor(private tokenBalanceService: TokenBalanceService,
@@ -38,8 +41,11 @@ export class SummaryTableComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         const sub = o.subscribe(summary => this.smartData.push(summary))
         this.subscriptions.push(sub)
-      }, i*1200)
+      }, i * 1200)
     })
+    this.totalSpending = this.calculateTotalSpending()
+    this.totalValue = this.calculateTotalValue()
+    this.total = this.calculateTotal()
   }
 
   ngOnDestroy() {
@@ -82,7 +88,7 @@ export class SummaryTableComponent implements OnInit, OnDestroy {
     return 4 * usd;
   }
 
-  isProfit(v: number | undefined): boolean {
+  isProfit(v: number | undefined | null): boolean {
     if (!v) {
       return false
     }
@@ -94,6 +100,27 @@ export class SummaryTableComponent implements OnInit, OnDestroy {
       return ''
     }
     return v?.toFixed(2)
+  }
+
+  calculateTotalSpending(): Observable<number> {
+    return combineLatest(this.data)
+      .pipe(map(summaries => summaries
+        .map(s => s.totalSpendingPLN)
+        .reduce((b1, b2) => b1 + b2)
+      ))
+  }
+
+  calculateTotalValue(): Observable<number> {
+    return combineLatest(this.data)
+      .pipe(map(summaries => summaries
+        .map(s => s.valuePLN)
+        .reduce((b1, b2) => b1 + b2)
+      ))
+  }
+
+  calculateTotal(): Observable<number> {
+    return combineLatest([this.calculateTotalValue(), this.calculateTotalSpending()])
+      .pipe(map(([val, spen]) => val - spen))
   }
 }
 
