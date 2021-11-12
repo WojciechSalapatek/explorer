@@ -20,8 +20,6 @@ export class SummaryTableComponent implements OnInit, OnDestroy {
   smartData: Array<TokenSummary> = [];
   smartDataObservables: Array<Observable<TokenSummary>> = [];
   subscriptions: Array<Subscription> = [];
-  expectedTokens = Object.keys(this.TOKENS).length
-
 
   constructor(private tokenBalanceService: TokenBalanceService,
               private tokenApiService: TokenApiService,
@@ -37,7 +35,6 @@ export class SummaryTableComponent implements OnInit, OnDestroy {
       const sub = o.subscribe(d => {
         this.plainData.push(d)
         this.plainData = this.plainData.sort((d1, d2) => d2.valueUSD - d1.valueUSD)
-        console.log(this.plainData)
       })
       this.subscriptions.push(sub)
     })
@@ -65,6 +62,9 @@ export class SummaryTableComponent implements OnInit, OnDestroy {
   constructSmartSummary(token: Token): Observable<TokenSummary> {
     const balance = this.tokenBalanceService.getBalance(token)
     const tokenDef = this.tokenDefinitionService.getTokenDefinition(token)
+    if (!tokenDef.contractAddress) {
+      return of({} as TokenSummary)
+    }
     return this.smartContractService.tokenToUSD(tokenDef)
       .pipe(map(price => this.summaryOf(token, balance, {
         price: price,
