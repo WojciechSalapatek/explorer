@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "publish-gh": "ng build --prod --base-href https://wojciechsalapatek.github.io/explorer/ && ngh --dir=dist/explorer"
   },
   "private": true,
   "dependencies": {

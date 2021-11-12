@@ -10,6 +10,7 @@ import {PancakeswapApiService} from "./service/pancakeswap-api-service";
 import {TokenApiService} from "./service/token-api-service";
 import {BitqueryApiService} from "./service/bitquery/bitquery-api-service";
 import {SmartContractService} from "./service/smartcontract/smart-contract-service";
+import {BinancePriceApiService} from "./service/binance-price-api.service";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {SmartContractService} from "./service/smartcontract/smart-contract-servi
     PancakeswapApiService,
     TokenApiService,
     BitqueryApiService,
-    SmartContractService
+    SmartContractService,
+    BinancePriceApiService
   ],
   bootstrap: [AppComponent]
 })

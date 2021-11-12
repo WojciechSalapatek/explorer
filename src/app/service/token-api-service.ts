@@ -1,27 +1,26 @@
 import {Injectable} from "@angular/core";
 import {PancakeswapApiService} from "./pancakeswap-api-service";
 import {Token} from "../token/token-definition";
-import {Observable} from "rxjs";
-import {map} from "rxjs/operators";
+import {Observable, of} from "rxjs";
+import {BinancePriceApiService} from "./binance-price-api.service";
+import {ApiService} from "./api-service";
 
 @Injectable()
 export class TokenApiService {
-  constructor(private pancakeswapApiService: PancakeswapApiService) {
+  apiServices: Array<ApiService>;
+
+  constructor(private pancakeswapApiService: PancakeswapApiService,
+              private binancePriceApiService: BinancePriceApiService
+  ) {
+    this.apiServices = [this.pancakeswapApiService, this.binancePriceApiService]
   }
 
   public getTokenHoldingData(name: Token): Observable<TokenHoldingData> {
-    return this.fromPancakeswap(name)
-  }
-
-  private fromPancakeswap(name: Token): Observable<TokenHoldingData> {
-    return this.pancakeswapApiService.getForToken(name)
-      .pipe(map(
-        d => ({
-          name: d.data.name,
-          symbol: d.data.symbol,
-          price: d.data.price
-        } as TokenHoldingData)
-      ));
+    const apiProvider = this.apiServices.find(s => s.supportedTokens().indexOf(name) > -1);
+    if (apiProvider) {
+      return apiProvider.getForToken(name)
+    }
+    return of({} as TokenHoldingData);
   }
 }
 

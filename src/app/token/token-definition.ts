@@ -10,6 +10,12 @@ export class TokenDefinitionService {
     new TokenDefinition(Token.SHIBAZILLA, 'SHIBAZILLA', 'ShibaZilla', '0x68810a6f5bb0491cb9ccf8c52735a1acf5f28009', true),
     new TokenDefinition(Token.COCK, 'COCK', 'ShibaCock', '0x9fdce4bafccfc9e9dac362be6bb5fb5d2aba3a58'),
     new TokenDefinition(Token.SQUIDGAMES, 'SQUIDGAMES', 'International Squid Games', '0x7c4f83697da7341e2e6766fede02f3b685343551'),
+    new TokenDefinition(Token.ONE, 'ONE', 'Harmony', '0x03fF0ff224f904be3118461335064bB48Df47938'),
+    new TokenDefinition(Token.SANTA, 'SANTA', 'SANTA', '0x4F1A6FC6A7B65Dc7ebC4EB692Dc3641bE997c2F2'),
+    new TokenDefinition(Token.SOL, 'SOL', 'Solana', ''),
+    new TokenDefinition(Token.XRP, 'XRP', 'Ripple', ''),
+    new TokenDefinition(Token.HBAR, 'HBAR', 'Hedera', ''),
+    new TokenDefinition(Token.ADA, 'ADA', 'Cardano', ''),
   ]
 
   public getTokenDefinition(name: Token): TokenDefinition {
@@ -56,11 +62,17 @@ export class TokenDefinition {
 }
 
 export enum Token {
-  SQUID = 'SQUID',
+  SOL = 'SOL',
+  ADA = 'ADA',
+  XRP = 'XRP',
+  HBAR = 'HBAR',
+  ONE = 'ONE',
   TABOO = 'TABOO',
   GHC = 'GHC',
+  SANTA = 'SANTA',
   COCK = 'COCK',
+  SQUIDGAMES = 'SQUIDGAMES',
+  SQUID = 'SQUID',
   SHIBAZILLA = 'SHIBAZILLA',
   BABYDOGEZILLA = 'BABYDOGEZILLA',
-  SQUIDGAMES = 'SQUIDGAMES',
 }

@@ -114,6 +114,7 @@ export class SummaryTableComponent implements OnInit, OnDestroy {
     return combineLatest(this.data)
       .pipe(map(summaries => summaries
         .map(s => s.valuePLN)
+        .filter(v => v)
         .reduce((b1, b2) => b1 + b2)
       ))
   }
