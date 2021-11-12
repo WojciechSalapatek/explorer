@@ -1,4 +1,10 @@
-<table class="table table-dark">
+<div *ngIf="isLoading()">
+  <div class="spinner-border text-info" role="status">
+  </div>
+  &nbsp;
+  <span class="badge alert-info" style="margin-bottom: 15px"> Loading in progress </span>
+</div>
+<table class="table table-dark table-hover table-responsive sortable">
   <thead>
   <tr>
     <th scope="col">#</th>
@@ -31,11 +37,18 @@
   </tbody>
 </table>
 
-<h2>TOTAL SPENDING: <span class="badge badge-default">{{calculateTotalSpending()}}</span></h2>
-<h2>TOTAL VALUE: <span class="badge badge-default">{{calculateTotalValue()}}</span></h2>
-<h2>COMBINED: <span [ngClass]="isProfit(calculateTotal()) ? 'badge badge-success' : 'badge badge-danger'" >{{calculateTotal()}}</span></h2>
+<h2>TOTAL SPENDING: <span class="badge alert-primary">{{calculateTotalSpending()}}</span></h2>
+<h2>TOTAL VALUE: <span class="badge alert-secondary">{{calculateTotalValue()}}</span></h2>
+<h2>COMBINED: <span [ngClass]="isProfit(calculateTotal()) ? 'badge alert-success' : 'badge alert-danger'" >{{calculateTotal()}}</span></h2>
 
-<h2>EXPERIMENTAL SMART DATA</h2>
+
+<h2 style="margin-top: 25px">EXPERIMENTAL SMART DATA</h2>
+<div *ngIf="isSmartDataLoading()">
+  <div class="spinner-border text-info" role="status">
+  </div>
+  &nbsp;
+  <span class="badge alert-info" style="margin-bottom: 15px"> Loading in progress </span>
+</div>
 <table class="table table-dark">
   <thead>
   <tr>

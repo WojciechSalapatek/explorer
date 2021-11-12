@@ -20,6 +20,7 @@ export class SummaryTableComponent implements OnInit, OnDestroy {
   smartData: Array<TokenSummary> = [];
   smartDataObservables: Array<Observable<TokenSummary>> = [];
   subscriptions: Array<Subscription> = [];
+  expectedTokens = Object.keys(this.TOKENS).length
 
 
   constructor(private tokenBalanceService: TokenBalanceService,
@@ -33,7 +34,11 @@ export class SummaryTableComponent implements OnInit, OnDestroy {
       .map(k => this.TOKENS[k as Token])
       .map(t => this.constructSummary(t))
     this.data.forEach(o => {
-      const sub = o.subscribe(d => this.plainData.push(d))
+      const sub = o.subscribe(d => {
+        this.plainData.push(d)
+        this.plainData = this.plainData.sort((d1, d2) => d2.valueUSD - d1.valueUSD)
+        console.log(this.plainData)
+      })
       this.subscriptions.push(sub)
     })
     this.smartDataObservables = Object.keys(this.TOKENS)
@@ -102,16 +107,26 @@ export class SummaryTableComponent implements OnInit, OnDestroy {
   }
 
   calculateTotalSpending(): number {
+    if (!this.plainData) return 0
     return this.plainData
         .map(s => s.totalSpendingPLN)
-        .reduce((b1, b2) => b1 + b2);
+        .reduce((b1, b2) => b1 + b2, 0);
   }
 
   calculateTotalValue(): number {
+    if (!this.plainData) return 0
     return this.plainData
         .map(s => s.valuePLN)
         .filter(v => v)
-        .reduce((b1, b2) => b1 + b2)
+        .reduce((b1, b2) => b1 + b2, 0)
+  }
+
+  isLoading(): boolean {
+    return this.plainData.length < this.data.length
+  }
+
+  isSmartDataLoading(): boolean {
+    return this.smartData.length < this.smartDataObservables.length
   }
 
   calculateTotal(): number {

@@ -20,7 +20,7 @@ export class TokenApiService {
     if (apiProvider) {
       return apiProvider.getForToken(name)
     }
-    return of({} as TokenHoldingData);
+    return of({price: -1} as TokenHoldingData);
   }
 }
 
