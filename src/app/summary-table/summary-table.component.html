@@ -37,12 +37,12 @@
   </tbody>
 </table>
 
-<h2>TOTAL SPENDING: <span class="badge alert-primary">{{calculateTotalSpending()}}</span></h2>
+<h2 style="margin-top: 50px; margin-bottom: 50px">TOTAL SPENDING: <span class="badge alert-primary">{{calculateTotalSpending()}}</span></h2>
 <h2>TOTAL VALUE: <span class="badge alert-secondary">{{calculateTotalValue()}}</span></h2>
 <h2>COMBINED: <span [ngClass]="isProfit(calculateTotal()) ? 'badge alert-success' : 'badge alert-danger'" >{{calculateTotal()}}</span></h2>
 
 
-<h2 style="margin-top: 25px">EXPERIMENTAL SMART DATA</h2>
+<h2>EXPERIMENTAL SMART DATA</h2>
 <div *ngIf="isSmartDataLoading()">
   <div class="spinner-border text-info" role="status">
   </div>

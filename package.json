@@ -27,6 +27,7 @@
     "jquery": "^3.6.0",
     "os-browserify": "^0.3.0",
     "rxjs": "~6.6.0",
+    "sha.js": "^2.4.11",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "tslib": "^2.3.0",

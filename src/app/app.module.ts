@@ -11,15 +11,19 @@ import {TokenApiService} from "./service/token-api-service";
 import {BitqueryApiService} from "./service/bitquery/bitquery-api-service";
 import {SmartContractService} from "./service/smartcontract/smart-contract-service";
 import {BinancePriceApiService} from "./service/binance-price-api.service";
+import { LoginVerifierComponent } from './login-verifier/login-verifier.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AppComponent,
-    SummaryTableComponent
+    SummaryTableComponent,
+    LoginVerifierComponent
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     TokenDefinitionService,
