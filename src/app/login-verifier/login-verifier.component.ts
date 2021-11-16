@@ -8,7 +8,7 @@ const shajs = require('sha.js')
 })
 export class LoginVerifierComponent implements OnInit {
 
-  readonly hash = '0724def06ee67b45c7d64583dc1ff0b6632d8a06ace1ea22653671a6065d7379'
+  readonly hash = '27dee860950265977d4bff21695f389c6fc4e834dd5f5cc76e6a3dcecce4e120'
   static readonly COOKIE_NAME = 'DEXP-ID'
   verified: boolean = false;
   inputPassword = '';
