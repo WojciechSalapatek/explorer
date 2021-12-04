@@ -22,7 +22,7 @@ export class BinancePriceApiService extends ApiService{
   }
 
   public supportedTokens(): Array<Token> {
-    return [Token.XRP, Token.ADA, Token.HBAR, Token.SOL]
+    return [Token.XRP, Token.ADA, Token.HBAR, Token.SOL, Token.BTC]
   }
 
   public getUrlForToken(tokenDef: TokenDefinition): string {

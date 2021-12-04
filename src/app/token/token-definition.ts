@@ -16,6 +16,7 @@ export class TokenDefinitionService {
     new TokenDefinition(Token.XRP, 'XRP', 'Ripple', ''),
     new TokenDefinition(Token.HBAR, 'HBAR', 'Hedera', ''),
     new TokenDefinition(Token.ADA, 'ADA', 'Cardano', ''),
+    new TokenDefinition(Token.BTC, 'BTC', 'Bitcoin', ''),
   ]
 
   public getTokenDefinition(name: Token): TokenDefinition {
@@ -62,6 +63,7 @@ export class TokenDefinition {
 }
 
 export enum Token {
+  BTC = 'BTC',
   SOL = 'SOL',
   ADA = 'ADA',
   XRP = 'XRP',

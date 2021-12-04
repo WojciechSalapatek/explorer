@@ -13,10 +13,11 @@ export class TokenBalanceService {
     // [Token.SHIBAZILLA, balanceSummaryOf(5.25, 15818950039070965.033)],
     // [Token.BABYDOGEZILLA, balanceSummaryOf(5.25, 134093203035316501.109)],
     [Token.SQUIDGAMES, balanceSummaryOf(5.25, 5144.824)],
-    [Token.SOL, balanceSummaryOf(55.7, 0.24)],
-    [Token.XRP, balanceSummaryOf(27.49, 23)],
-    [Token.ADA, balanceSummaryOf(51.88, 25.1)],
-    [Token.HBAR, balanceSummaryOf(40.6, 89)]
+    [Token.BTC, balanceSummaryOf(0.00107, 52.93)],
+    [Token.SOL, balanceSummaryOf(55.7+43.20+12.30, 0.24+0.21+0.06)],
+    [Token.XRP, balanceSummaryOf(27.49+27.92+26.22, 23+33+31)],
+    [Token.ADA, balanceSummaryOf(51.88+34.46+18.66, 25.1+24+13)],
+    [Token.HBAR, balanceSummaryOf(40.6+28.92, 89+98)]
   ])
 
   public getBalances() {
