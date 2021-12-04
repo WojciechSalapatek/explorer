@@ -26,18 +26,18 @@ export class BinancePriceApiService extends ApiService{
   }
 
   public getUrlForToken(tokenDef: TokenDefinition): string {
-    return `${BinancePriceApiService.BASE_URL}${tokenDef.symbol}BNB`
+    return `${BinancePriceApiService.BASE_URL}${tokenDef.symbol}BUSD`
   }
 
   public getForToken(name: Token): Observable<TokenHoldingData> {
     const def = this.tokenDefinitionService.getTokenDefinition(name)
     const tokenPrice = (this.httpClient.get(this.getUrlForToken(def)) as Observable<BinanceTokenData>)
-    return combineLatest([this.bnbPrice, tokenPrice])
+    return tokenPrice
       .pipe(map(
-        ([bnb, d]) => ({
+        (d) => ({
           name: def.name,
           symbol: def.symbol,
-          price: d.price * bnb
+          price: d.price
         } as TokenHoldingData)
       ));
   }
